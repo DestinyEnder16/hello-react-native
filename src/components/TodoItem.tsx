@@ -1,24 +1,32 @@
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
+import { useTodos } from '../context/TodoContext';
 
 interface todoProps {
   todo: {
     title: string;
     desc: string;
+    id: number;
+    done: boolean;
   };
   //   id: number;
 }
 
 export default function TodoItem({ todo }: todoProps) {
   const [showDesc, setShowDesc] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
+  const { checkTodo, deleteTodo } = useTodos();
+  const [isChecked, setIsChecked] = useState(todo.done);
   return (
     <View style={styles.todo}>
       <View>
         <BouncyCheckbox
           isChecked={isChecked}
-          onPress={() => setIsChecked((prev) => !prev)}
+          onPress={() => {
+            setIsChecked((prev) => !prev);
+            checkTodo(todo.id);
+          }}
         />
       </View>
 
@@ -49,6 +57,10 @@ export default function TodoItem({ todo }: todoProps) {
           </Text>
         )}
       </View>
+
+      <TouchableOpacity onPress={() => deleteTodo(todo.id)}>
+        <Ionicons size={20} name="trash" color={'#e75353'} />
+      </TouchableOpacity>
     </View>
   );
 }
@@ -60,6 +72,7 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingVertical: 20,
     paddingHorizontal: 12,
+    gap: 5,
 
     // box shadow
     backgroundColor: '#FFFFFF',

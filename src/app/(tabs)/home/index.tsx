@@ -1,3 +1,5 @@
+import ProgressTab from '@/src/components/ProgressTab';
+import { useTodos } from '@/src/context/TodoContext';
 import { StyleSheet, Text, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
@@ -11,12 +13,29 @@ if (hours < 12) {
   greeting = 'Good evening';
 }
 export default function Index() {
+  const { todos } = useTodos();
+  const numTodos = todos.length;
+
+  // Assuming 'todos' is your array of objects
+  interface Todo {
+    id: string;
+    title: string;
+    done: boolean;
+    // Add other fields if necessary
+  }
+
+  const doneCount: number = (todos as Todo[]).filter(
+    (todo: Todo) => todo.done === true
+  ).length;
+
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
-        <View>
+        <View style={{ marginBottom: 24 }}>
           <Text style={styles.greetingText}>{greeting}, Destiny</Text>
         </View>
+
+        <ProgressTab numTodos={numTodos} doneTodos={doneCount} />
       </SafeAreaView>
     </SafeAreaProvider>
   );

@@ -24,7 +24,7 @@ export default function Index() {
   return (
     <SafeAreaView>
       <View style={styles.container}>
-        <Text style={styles.heading}>{greeting} Alex</Text>
+        <Text style={styles.heading}>{greeting} Destiny</Text>
 
         <Pressable style={styles.btn} onPress={() => router.navigate('/home')}>
           <Text style={styles.text}>Get Started</Text>

@@ -1,23 +1,24 @@
+import { useTodos } from '@/src/context/TodoContext';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
-import { useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import TodoList from '../../../components/TodoList';
 
 export default function Index() {
-  const [todos, setTodos] = useState([
-    {
-      id: 1,
-      title: 'Feed the dog',
-      desc: 'By 6pm, give Mia the crumbles',
-    },
-    {
-      id: 2,
-      title: 'Head to the shop',
-      desc: 'Remember to sell off the eggs',
-    },
-  ]);
+  const { todos } = useTodos();
+  // const [todos, setTodos] = useState([
+  //   {
+  //     id: 1,
+  //     title: 'Feed the dog',
+  //     desc: 'By 6pm, give Mia the crumbles',
+  //   },
+  //   {
+  //     id: 2,
+  //     title: 'Head to the shop',
+  //     desc: 'Remember to sell off the eggs',
+  //   },
+  // ]);
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ backgroundColor: '#F8F9FA' }}>
@@ -32,7 +33,7 @@ export default function Index() {
             style={styles.addBtn}
             onPress={() => router.navigate('/todo/add')}
           >
-            <Ionicons name="add-circle" size={32} color={'orange'} />
+            <Ionicons name="add" size={32} color={'white'} />
           </Pressable>
         </View>
       </SafeAreaView>

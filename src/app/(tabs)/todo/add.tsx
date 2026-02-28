@@ -1,3 +1,5 @@
+import { useTodos } from '@/src/context/TodoContext';
+import { navigate } from 'expo-router/build/global-state/routing';
 import { useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
@@ -5,6 +7,13 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 export default function Add() {
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
+  const { addTodo } = useTodos();
+
+  function handleSubmit() {
+    if (!title) return;
+    addTodo({ title, desc, done: false });
+    navigate('..');
+  }
   return (
     <SafeAreaProvider>
       <SafeAreaView>
@@ -14,6 +23,8 @@ export default function Add() {
               <TextInput
                 style={styles.titleInput}
                 placeholder="What needs to be done?"
+                value={title}
+                onChangeText={setTitle}
                 autoFocus={true} // Opens the keyboard automatically
               ></TextInput>
             </View>
@@ -21,6 +32,8 @@ export default function Add() {
               <TextInput
                 style={styles.description}
                 placeholder="Add some details..."
+                value={desc}
+                onChangeText={setDesc}
                 placeholderTextColor="#A9A9A9"
                 multiline={true} // Allows multiple lines
                 numberOfLines={4} // Sets the initial visible height
@@ -33,7 +46,7 @@ export default function Add() {
           </View>
 
           <View>
-            <Pressable style={styles.btn}>
+            <Pressable style={styles.btn} onPress={() => handleSubmit()}>
               <Text style={styles.btnText}>Submit</Text>
             </Pressable>
           </View>
@@ -77,6 +90,7 @@ const styles = StyleSheet.create({
     height: 144,
     padding: 10,
     fontFamily: 'Open-Sans',
+    fontSize: 18,
   },
   label: {
     fontSize: 24,

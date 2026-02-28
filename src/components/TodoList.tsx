@@ -7,7 +7,6 @@ interface todoProps {
 }
 
 export default function TodoList({ todos }: todoProps) {
-  console.log(todos);
   // [{"desc": "By 6pm, give Mia the crumbles", "id": 1, "title": "Feed the dog"}]
   if (todos.length === 0) {
     return (
